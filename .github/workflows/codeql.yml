@@ -1,4 +1,4 @@
-name: "CodeQL Analysis"
+name: "CodeQL Security Analysis"
 
 on:
   push:
@@ -6,12 +6,13 @@ on:
   pull_request:
     branches: [ "main", "master" ]
   schedule:
-    - cron: '0 0 * * 1'  # Run weekly on Mondays
+    - cron: '0 0 * * 1'
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     permissions:
       actions: read
       contents: read
@@ -20,8 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'python' ]  # Add your languages here
-        # Supported: 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'swift'
+        language: [ 'javascript', 'python' ]
 
     steps:
     - name: Checkout repository
@@ -31,9 +31,9 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        # Override detected languages with explicit list if needed
-        # queries: security-extended,security-and-quality
-
+        # Use security-extended query suite for more findings
+        queries: security-extended,security-and-quality
+        
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
 
