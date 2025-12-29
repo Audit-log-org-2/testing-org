@@ -26,6 +26,19 @@ function convertFile(filename) {
 function executeWithShell(userInput) {
   exec(userInput, { shell: true }, (error, stdout) => {
     console.log(stdout);
+  });// Pattern 4: Shell: true (dangerous)
+
+  
+function executeWithShell(userInput) {
+  exec(userInput, { shell: true }, (error, stdout) => {
+  });
+}
+  
+
+// Pattern 4: Shell: true (dangerous)
+function executeWithShell(userInput) {
+  exec(userInput, { shell: true }, (error, stdout) => {
+    console.log(stdout);
   });
 }
 
